@@ -19,7 +19,10 @@ class CustomerRepository extends ServiceEntityRepository
         parent::__construct($registry, Customer::class);
     }
 
-
+    /**
+     * @return update of customer
+     * @param idCustomer & all entity Cutomer
+     */
     public function SalesInfosByCustomer($idCustomer, $customerFirstname){
         $conn = $this->getEntityManager()->getConnection();
 

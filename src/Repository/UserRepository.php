@@ -19,6 +19,10 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * @return infos of seller (=user)
+     * @param userId (= sellerId )
+     */
     public function UserInfos($userId) 
     {
         $statment = $this->createQueryBuilder('u')
@@ -30,7 +34,5 @@ class UserRepository extends ServiceEntityRepository
         //RESULTAT
         return $statment->getQuery()->getResult();         
     }  
-
-
 
 }

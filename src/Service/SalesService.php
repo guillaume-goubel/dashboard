@@ -26,4 +26,8 @@ class SalesService {
         return $repo->CustomerInfosBySeller($sellerId);
     }
 
+    public function CustomersInfos($userId){
+        $repo = $this->om->getRepository(Sales::class);
+        return $repo->CustomersInfos($userId);
+    }
 }

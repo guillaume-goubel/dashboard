@@ -9,15 +9,11 @@ $(document).ready(function () {
         suppressScrollX: true
     });
 
-
     new PerfectScrollbar('#azContractsList', {
         suppressScrollX: true
     });
 
-    // AJAX1 pour la partie droite
-    /**************************
-     * Var
-     ***************************/
+    // ! FOR CUSTOMER INFO PARTS LEFT
     var pathAjax1 = $("#ajax_path1").attr("data-path");
 
     $('.az-contact-item').on('click touch', function () {
@@ -35,13 +31,9 @@ $(document).ready(function () {
         $('#formInfosCustomer').hide();
         $('#azContractsList').hide();
 
-        /*********************************
-         * *var idCustomer for AJAX REQUEST
-         **********************************/
 
         var customerId = $(this).find('#set-infoId').val();
 
-        //Find All info Sales
         $.ajax({
                 type: "post",
                 url: pathAjax1,
@@ -51,13 +43,6 @@ $(document).ready(function () {
             })
 
             .done(function (data, textStatus, jqxhr) {
-
-                /**
-                 * ! FOR CUSTOMER INFO PARTS RIGHT
-                 */
-
-                console.log(data);
-
 
                 // SET INFO CUSTOMER FOR INFO CUSTOMER*************************************************************
                 var infoLastName = data[0].last_name
@@ -84,10 +69,15 @@ $(document).ready(function () {
                 var infoCity = data[0].city
                 $('#formCustomerCity').attr('value', infoCity);
 
-
                 // SET LINK FOR FORM *************************************************************
                 var pathForSubmit = 'http://127.0.0.1:8000/user/sales/editCustomer/' + customers_id;
                 $('#FormEditCustomer').attr('action', pathForSubmit);
+
+                //Passer la valeur de l'id du customer à l'url sans espace (lien vers googleMap)
+                var idCustomer = $('#get-infoId').html();
+                console.log(idCustomer);
+                $( "#linkGoogleMap" ).attr( 'href', 'http://127.0.0.1:8000/user/customer/customerMap/' + idCustomer );
+
 
             })
 
@@ -102,7 +92,8 @@ $(document).ready(function () {
     });
 
 
-
+    
+    // ! FOR CUSTOMER INFO PARTS RIGHT
     // CUSTOMER INFO (icone immeuble)
     $('#linkCustomer').on('click touch', function () {
 
@@ -139,14 +130,14 @@ $(document).ready(function () {
                 elmt_div_container.empty();
                 
                 $.each(data, function (index, list) { 
-    
+
+                    // Concatenation for list of contracts
                     elmt_div_container.append('<div class="az-contact-item">' +
                     '<div class="az-avatar bg-gray-500 online">' + list.sale_types_id  +'</div>' +
                     '<div class="az-contact-body">'+
                     '<h6> numéro de contrat :' + list.id + '</h6>' +
                     '<span class="phone">Zone de vente :' + list.sale_zone +'</span>' +
                     '</div>');
-
                 });
 
             })
@@ -158,9 +149,6 @@ $(document).ready(function () {
             .always(function () {
 
             });
-
     });
-
-
 
 });

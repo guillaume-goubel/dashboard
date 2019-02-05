@@ -53,29 +53,29 @@
 
         <div class="az-contact-label">{{ letter }}</div>
 
-        {% for sale in sales %}
+        {% for customer in customers%}
 
-        {% if sale.customers.lastName|first == letter %}
+        {% if customer.last_name|first == letter %}
 
         <div class="az-contact-item">
 
           <div class="az-avatar bg-gray-700 online">{{ letter }}</div>
           <div class="az-contact-body">
-            <h6>{{sale.customers.lastName}}</h6>
-            <span class="phone">{{sale.customers.firstName}}</span>
-          </div><!-- az-contact-body -->
+            <h6>{{customer.last_name}}</h6>
+            <span class="phone">{{customer.first_name}}</span>
+          </div>
           <a href="" class="az-contact-star active"><i class="typcn typcn-star"></i></a>
 
           {# input hidden for set the rigth page pour envoi requete AJAX #}
-          <input id="set-infoId" type="hidden" value=" {{sale.customers.id}} ">
+          <input id="set-infoId" type="hidden" value=" {{customer.id}} ">
 
-        </div><!-- az-contact-item -->
+        </div>
 
         {% endif %}
 
         {% endfor %}
 
-        {% endfor %}
+        {% endfor %} 
 
         {# path to AJAX URL - CUSTOMER INFOS #}
         <div id="ajax_path1" data-path="{{ path('ajax')}}"></div>

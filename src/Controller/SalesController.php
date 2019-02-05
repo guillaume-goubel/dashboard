@@ -27,6 +27,7 @@ class SalesController extends AbstractController
 {
 
     /**
+     * @return INFOS for Dashboard
      * @Route("/user/home", name="home")
      */
     public function SalesAmount(SalesService $salesService, Request $request, UserInterface $user, UserService $userService)
@@ -41,6 +42,7 @@ class SalesController extends AbstractController
 
 
     /**
+     * @return LIST of contracts
      * @Route("/user/sales/customerList", name="contractList")
      */
     public function CostumerList(SalesService $salesService, Request $request, UserInterface $user)
@@ -57,7 +59,9 @@ class SalesController extends AbstractController
         ]);
     }
 
+
     /**
+     * @return INFOS for sales
      * @Route("/user/sales/salesInfos", name="SalesInfos")
      */
     public function SalesInfosDisplay(SalesService $salesService, CustomerService $customerService, Request $request, UserInterface $user)
@@ -65,12 +69,13 @@ class SalesController extends AbstractController
         $userId = $user->getId(); 
 
         return $this->render('sales/SalesInfos.html.twig' , [
-            'sales' => $salesService->SalesInfos($userId),
+            'customers' => $salesService->CustomersInfos($userId),
         ]);
     }
 
     
     /**
+     * @return EDIT Customer 
      * @Route("/user/sales/editCustomer/{id}", name="editCustomer")
      */
     public function SalesInfosDisplaytest(SalesService $salesService, Request $request, UserInterface $user, Customer $customer)
@@ -92,7 +97,9 @@ class SalesController extends AbstractController
         return $this->redirectToRoute('SalesInfos');
     }
 
+
     /**
+     * @return DELETE Customer 
     * @Route("/user/sales/customerDelete/{id}", name="SalesDelete", requirements={"id"="\d+"} )
     */
     public function SalesDelete(Request $request, Customer $customer)

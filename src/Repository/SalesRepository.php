@@ -19,20 +19,28 @@ class SalesRepository extends ServiceEntityRepository
         parent::__construct($registry, Sales::class);
     }
 
-    public function SalesInfos($userId)
+    /**
+     * @return List of customers 
+     * @param userId (= sellerId )
+     */
+    public function CustomersInfos($userId)
     {
-        $statment = $this->createQueryBuilder('s') 
-                     ->innerJoin('s.seller', 'sales_Seller' )      
-                     ->addSelect('sales_Seller')
-                     ->innerjoin('s.customers', 'sales_Customers' )      
-                     ->addSelect('sales_Customers')
-                     ->andWhere('s.seller = :val')
-                     ->setparameter('val', $userId);
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT * FROM customer A WHERE A.id in (select customers_id from sales WHERE seller_id = ?)";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1, $userId);
+        $stmt->execute();
 
         //RESULTAT
-        return $statment->getQuery()->getResult();         
+        return $stmt->fetchAll();     
     }  
 
+    /**
+     * @return all info of sales 
+     * @param idCustomer(= userId)
+     */
     public function SalesInfosByCustomer($idCustomer){
 
         $conn = $this->getEntityManager()->getConnection();
@@ -46,7 +54,10 @@ class SalesRepository extends ServiceEntityRepository
         return $stmt->fetchAll();
     }
 
-
+    /**
+     * @return all info of sales 
+     * @param userId (= sellerId ) & idCustomer
+     */
     public function SalesContractsByCustomer($userId, $idCustomer){
 
         $conn = $this->getEntityManager()->getConnection();
@@ -61,5 +72,25 @@ class SalesRepository extends ServiceEntityRepository
         return $stmt->fetchAll();
     }
 
+
+    public function SalesInfos($userId)
+    {
+        $statment = $this->createQueryBuilder('s') 
+                     ->innerJoin('s.seller', 'sales_Seller' )      
+                     ->addSelect('sales_Seller')
+                     ->innerjoin('s.customers', 'sales_Customers' )      
+                     ->addSelect('sales_Customers')
+                     ->andWhere('s.seller = :val')
+                     ->setparameter('val', $userId);
+
+        //RESULTAT
+        return $statment->getQuery()->getResult();      
+    }  
+
 }
+
+
+
+
+
 

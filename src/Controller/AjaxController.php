@@ -17,11 +17,12 @@ class AjaxController extends AbstractController
 
 
     /**
+     * @param idCustomer & $userId 
+     * @return LIST of customers for salesinfostemplate ( list of customer by seller - part left)
      * @Route("/ajax", name="ajax")
      */
     public function index(UserInterface $user) :Response
     {
-
         $idCustomer = null;
 
         $userId = $user->getId();
@@ -44,11 +45,12 @@ class AjaxController extends AbstractController
 
 
     /**
+     * @param idCustomer & $userId 
+     * @return LIST of contract by customer for salesinfostemplate ( list of customer by seller - part right)
      * @Route("/ajax2", name="ajaxSales")
      */
     public function index2(UserInterface $user) :Response
     {
-
         $idCustomer = null;
 
         $userId = $user->getId();

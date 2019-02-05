@@ -32,7 +32,7 @@ $(document).ready(function () {
                 el: '#map2',
                 lat: latitude,
                 lng: longitude,
-                zoom: 15
+                zoom: 20
             });
         
             mapMarker.addMarker({
@@ -52,8 +52,4 @@ $(document).ready(function () {
         .always(function () {
 
         });
-
-
-
-
 });

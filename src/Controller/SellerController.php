@@ -26,6 +26,7 @@ class SellerController extends AbstractController
 {
 
     /**
+     * @return AGENDA for new customer
      * @Route("/user/seller/agenda", name="SellerAgenda")
      */
     public function sellerAgenda()
@@ -35,6 +36,7 @@ class SellerController extends AbstractController
 
     
     /**
+     * @return FORM for new customer
      * @Route("/user/seller/newCustomer", name="newCustomer")
      */
     public function sellerNewcustomer(Request $request , SessionInterface $session)
@@ -88,7 +90,9 @@ class SellerController extends AbstractController
         ]);
     }
 
+
     /**
+     * @return FORM for new contract
      * @Route("/user/seller/newcontract", name="newContract")
      */
     public function contractList(Request $request, UserInterface $user, SessionInterface $session){
@@ -99,8 +103,8 @@ class SellerController extends AbstractController
         // en option dans le formulaire et ne porposer que le user en cours
         $infosCustomer = $session->get('infosCustomerArray');
 
-            // récupération de l'id du user dans la session pour l'envoyer en option dans le formulaire pour
-            // n'afficher que le dernier client
+        // récupération de l'id du user dans la session pour l'envoyer en option dans le formulaire pour
+        // n'afficher que le dernier client
         $newCustomerId = $infosCustomer["infosCustomerArray"]['id'];
         
         $sale = new Sales();
