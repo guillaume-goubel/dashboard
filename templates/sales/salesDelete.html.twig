@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<!-- vendor css Table -->
+<link rel="stylesheet" href="{{ asset('assets/css/azia.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+
+{% include 'partials/header.html.twig' %}
+
+<!-- BASIC MODAL -->
+<div id="modaldemo2" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Modification de contrat</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Les modifications ont été effectues</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-indigo" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
+
+{% include 'partials/footer.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('assets/js/azia.js') }}"></script>
+<script src="{{ asset('assets/js/modal.js') }}"></script>
+{% endblock %}

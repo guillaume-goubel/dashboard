@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Main-dashboard - {{parent()}}{% endblock %}
+
+{% block stylesheets %}
+<!-- vendor css Table -->
+<link rel="stylesheet" href="{{ asset('assets/css/azia.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+
+
+{# {% include 'partials/header.html.twig' %} #}
+
+<!-- BASIC MODAL -->
+<div id="modaldemo1" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Modification de contrat</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Les modifications ont été effectuées</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-indigo" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
+
+<div class="az-content-body" id="EditContractForm">
+
+    <div class="d-flex flex-column wd-md-400 pd-30 pd-sm-40 bg-gray-200">
+
+        <h2 class="az-content-title">Modification du contrat</h2>
+
+        {{ form_start(EditcontractType, {'attr': {'novalidate': 'novalidate'}}) }}
+
+        <div class="form-group">
+            <label class="form-control-label">Zone de vente: </label>
+            {{ form_widget(EditcontractType.saleZone, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(EditcontractType.saleZone) }}
+        </div><!-- form-group -->
+
+
+        <div class="form-group">
+            <label class="form-control-label">Date de création du contrat: </label>
+            {{ form_widget(EditcontractType.createdAt, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(EditcontractType.createdAt) }}
+        </div><!-- form-group -->
+
+
+        <div class="form-group">
+            <label class="form-control-label">Type de contrat: </label>
+            {{ form_widget(EditcontractType.saleTypes, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(EditcontractType.saleTypes) }}
+        </div><!-- form-group -->
+
+
+        <div class="form-group">
+            <label class="form-control-label">Client: </label>
+            {{ form_widget(EditcontractType.customers, { 'attr': {'class': 'form-control', 'placeholder':
+            'client'} }) }}
+            {{ form_errors(EditcontractType.customers) }}
+        </div><!-- form-group -->
+
+
+        <div class="form-group">
+            <label class="form-control-label">Vendeur: </label>
+            {{ form_widget(EditcontractType.seller, { 'attr': {'class': 'form-control', 'placeholder':
+            'vendeur'} }) }}
+            {{ form_errors(EditcontractType.seller) }}
+        </div><!-- form-group -->
+
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-az-primary pd-x-145" value="Modifier le contrat" data-toggle="modal"
+                data-target="#modaldemo1" />
+        </div>
+
+        {{ form_end(EditcontractType) }}
+    </div>
+</div>
+
+{# {% include 'partials/footer.html.twig' %} #}
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('assets/js/azia.js') }}"></script>
+<script src="{{ asset('assets/js/modal.js') }}"></script>
+{% endblock %}

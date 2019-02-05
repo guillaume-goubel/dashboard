@@ -1,0 +1,185 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Main-dashboard - {{parent()}}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('assets/css/azia.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+
+{% include 'partials/header.html.twig' %}
+
+<!-- BASIC MODAL : DELETE -->
+<div id="modaldemo2" class="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-content-demo">
+      <div class="modal-header">
+        <h6 class="modal-title">suppression de contrat</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Le contrat a été effacé</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-indigo" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# ******************************************************************************** #}
+
+<div class="az-content az-content-app az-content-contacts pd-b-0">
+  <div class="container">
+    <div class="az-content-left az-content-left-contacts">
+
+      <h2 class="az-content-title tx-24 mg-b-30">Détails contrat</h2>
+
+      <nav class="nav az-nav-line az-nav-line-chat">
+        <a href="" data-toggle="tab" class="nav-link active">Tous mes contrats</a>
+        {# <a href="" data-toggle="tab" class="nav-link">Groups</a> #}
+      </nav>
+
+      <!-- *************************LEFT******************************************************************************* -->
+
+      <div id="azContactList" class="az-contacts-list">
+
+        {% for letter in 'A'..'Z' %}
+
+        <div class="az-contact-label">{{ letter }}</div>
+
+        {% for sale in sales %}
+
+        {% if sale.customers.lastName|first == letter %}
+
+        <div class="az-contact-item">
+
+          <div class="az-avatar bg-gray-700 online">{{ letter }}</div>
+          <div class="az-contact-body">
+            <h6>{{sale.customers.lastName}}</h6>
+            <span class="phone">{{sale.customers.firstName}}</span>
+          </div><!-- az-contact-body -->
+          <a href="" class="az-contact-star active"><i class="typcn typcn-star"></i></a>
+
+          {# input hidden for set the rigth page #}
+          <input id="set-infoLastName" type="hidden" value=" {{sale.customers.lastName}} ">
+          <input id="set-infoId" type="hidden" value=" {{sale.customers.id}} ">
+          <input id="set-infoEmail" type="hidden" value=" {{sale.customers.email}} ">
+          <input id="set-infoAddress" type="hidden" value=" {{sale.customers.address}} / {{sale.customers.zipCode}} / {{sale.customers.city}} ">
+          {% set infoCreatedAt = sale.createdAt|date("d/m/Y") %}
+          <input id="set-infoCreatedAt" type="hidden" value=" {{infoCreatedAt}} ">
+          <input id="set-infoSaleId" type="hidden" value=" {{sale.id}} ">
+
+        </div><!-- az-contact-item -->
+
+        {% endif %}
+
+        {% endfor %}
+
+        {% endfor %}
+
+      </div><!-- az-contacts-list -->
+
+      <!-- *************************RIGHT******************************************************************************* -->
+    </div><!-- az-content-left -->
+    <div class="az-content-body az-content-body-contacts">
+      <div class="az-contact-info-header">
+        <div class="media">
+          <div class="az-img-user">
+            <img src="https://via.placeholder.com/500x500" alt="">
+            <a href=""><i class="typcn typcn-camera-outline"></i></a>
+          </div>
+          <div class="media-body">
+            <h4 id="get-infoLastName">*Le nom du client</h4>
+            <p>Numéro de contrat : <span id="get-infoId"></span></p>
+            <nav class="nav">
+              <a id="linkGoogleMap" class="nav-link"><i class="icon ion-md-globe"></i> Google Map </a>
+            </nav>
+          </div>
+        </div>
+
+        <div class="az-contact-action">
+
+          {# Le href est créé dynamiquement en js #}
+          <a id="linkEdit"><i class="typcn typcn-edit"></i> Editer le contrat </a>
+
+          {# Le href est créé dynamiquement en js #}
+          <a id="linkDelete"><i class="typcn typcn-trash"></i> Effacer le contrat</a>
+        </div>
+
+      </div>
+      <div class="az-contact-info-body">
+
+        <div class="media-list">
+
+
+          {# <div class="media">
+            <div class="media-icon"><i class="fas fa-mobile-alt"></i></div>
+            <div class="media-body">
+              <div>
+                <label>Work</label>
+                <span class="tx-medium">+1 (234) 567 8901</span>
+              </div>
+              <div>
+                <label>Personal</label>
+                <span class="tx-medium">+1 (498) 021 0090</span>
+              </div>
+            </div><!-- media-body -->
+          </div><!-- media --> #}
+
+
+          <div class="media">
+            <div class="media-icon align-self-start"><i class="far fa-envelope"></i></div>
+            <div class="media-body">
+
+              <div>
+                <label>Email</label>
+                <span class="tx-medium" id="get-infoEmail">*L'email du client</span>
+              </div>
+              {# <div>
+                <label>Other Account</label>
+                <span class="tx-medium">me@themepixels.me</span>
+              </div> #}
+            </div><!-- media-body -->
+          </div><!-- media -->
+          <div class="media">
+            <div class="media-icon"><i class="far fa-map"></i></div>
+            <div class="media-body">
+              <div>
+                <label>Adresse</label>
+                <span class="tx-medium" id="get-infoAddress">*L'adresse du client</span>
+              </div>
+            </div><!-- media-body -->
+          </div><!-- media -->
+          <div class="media">
+            <div class="media-icon"><i class="far fa-clock"></i></div>
+            <div class="media-body">
+              <div>
+                <label>Date de création</label>
+                <span class="tx-medium" id="get-infoCreatedAt">*La date de création du contrat</span>
+              </div>
+            </div><!-- media-body -->
+          </div><!-- media -->
+        </div><!-- media-list -->
+      </div><!-- az-contact-info-body -->
+    </div><!-- az-content-body -->
+  </div>
+</div><!-- az-content -->
+
+{% include 'partials/footer.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="{{ asset('assets/lib/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/js/contacts.js') }}"></script>
+
+<script src="{{ asset('assets/js/azia.js') }}"></script>
+
+
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Main-dashboard - {{parent()}}{% endblock %}
+
+{% block stylesheets %}
+<!-- vendor css Table -->
+<link rel="stylesheet" href="{{ asset('assets/lib/datatables.net-dt/css/jquery.dataTables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/lib/select2/css/select2.min.css') }}">
+
+<link rel="stylesheet" href="{{ asset('assets/css/azia.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+
+{% endblock %}
+
+{% block body %}
+
+{% include 'partials/header.html.twig' %}
+
+
+
+{#************************************************************************************************************** #}
+
+{# Nombre de contrats au total #}
+
+{# Boucle sur les types de contrats afin de donner les valeurs en js au fichier chart.chart.js #}
+{% set low = 0 %}
+{% set middle = 0 %}
+{% set premium = 0 %}
+
+{% for sale in sales %}
+
+{% if sale.saleTypes.type == 'low' %}
+{% set low = low + 1 %}
+{% endif %}
+
+{% if sale.saleTypes.type == 'middle' %}
+{% set middle = middle + 1 %}
+{% endif %}
+
+{% if sale.saleTypes.type == 'premium' %}
+{% set premium = premium + 1 %}
+{% endif %}
+
+{% endfor %}
+
+{# types en % #}
+{# NumberOfContracts passé via le controller #}
+{% set lowP = low / NumberOfContracts * 100 %}
+{% set MiddleP = middle / NumberOfContracts * 100 %}
+{% set PremiumP = premium / NumberOfContracts * 100 %}
+
+<input type="hidden" id="lowP" value="{{lowP}}">
+<input type="hidden" id="middleP" value="{{MiddleP}}">
+<input type="hidden" id="premiumP" value="{{PremiumP}}">
+
+<input type="hidden" id="low" value="{{low}}">
+<input type="hidden" id="middle" value="{{middle}}">
+<input type="hidden" id="premium" value="{{premium}}">
+
+
+
+{#************************************************************************************************************** #}
+
+{# GRAPHIQUE #}
+<div class="az-content">
+  <div class="container">
+    <div class="az-content-body">
+
+
+      <div class="row row-sm" id="grapHide">{# caché #}
+        <div class="col-sm-8 col-md-6 col-xl-4">
+          <div class="az-content-label az-content-label-sm mg-b-15">Solid Color</div>
+          <div class="ht-200 ht-lg-250"><canvas id="chartBar1"></canvas></div>
+        </div><!-- col-6 -->
+        <div class="col-sm-8 col-md-6 col-xl-4 mg-t-20 mg-md-t-0">
+          <div class="az-content-label az-content-label-sm mg-b-15">With Transparency</div>
+          <div class="ht-200 ht-lg-250"><canvas id="chartBar2"></canvas></div>
+        </div><!-- col-6 -->
+        <div class="col-sm-8 col-md-6 col-xl-4 mg-t-20 mg-xl-t-0">
+          <div class="az-content-label az-content-label-sm mg-b-15">Using Gradient Color</div>
+          <div class="ht-200 ht-lg-250"><canvas id="chartBar3"></canvas></div>
+        </div><!-- col-6 -->
+      </div><!-- row -->
+
+      <div class="az-content-label mg-t-10" id="menuTitle">Types de produits : <u>{{NumberOfContracts}} contrats</u>
+      </div>
+      <div class="row row-sm">
+        <div class="col-sm-8 col-md-6">
+          <div class="chartjs-wrapper-demo"><canvas id="chartBar4"></canvas></div>
+        </div><!-- col-6 -->
+      </div><!-- row -->
+
+    </div><!-- az-content-body -->
+  </div>
+</div><!-- az-content -->
+
+<div class="az-content">
+  <div class="container">
+    <div class="az-content-body">
+      <div class="az-content-label mg-b-10" id="menuTitle">Chercher un contrat :</div>
+      <table id="datatable1" class="display responsive nowrap">
+        <thead>
+          <tr>
+            <th class="wd-5p">Numero de contrat</th>
+            <th class="wd-5p">zone de vente</th>
+            <th class="wd-10p">Type de contrat</th>
+            <th class="wd-10p">Date du contrat</th>
+            <th class="wd-10p">Montant</th>
+            <th class="wd-10p">Nom du client</th>
+            <th class="wd-5p">INFOS CLIENT</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for sale in sales %}
+
+          <tr>
+            <td>{{sale.id}}</td>
+            <td>{{sale.saleZone}}</td>
+            <td>{{sale.saleTypes.type}}</td>
+            <td>{{sale.createdAt |date("d/m/Y")}}</td>
+            <td>{{sale.saleTypes.amount}}</td>
+            <td>{{sale.customers.lastName}}</td>
+            <td><a href="{{path('SalesInfos')}}"><button class="btn btn-outline-indigo btn-sm">plus d'infos</button><a></td>
+          </tr>
+
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div><!-- az-content-body -->
+  </div>
+</div><!-- az-content -->
+
+{% include 'partials/footer.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="{{ asset('assets/lib/chart.js/Chart.bundle.min.js') }}"></script>
+{# Table #}
+<script src="{{ asset('assets/lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/lib/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('assets/lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/lib/select2/js/select2.min.js') }}"></script>
+
+{# Main #}
+<script src="{{ asset('assets/js/azia.js') }}"></script>
+
+<script src="{{ asset('assets/js/chart.chartjs.js') }}"></script>
+
+{# Data #}
+<script src="{{ asset('assets/js/tables.js') }}"></script>
+
+{% endblock %}

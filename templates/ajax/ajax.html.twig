@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ajax - {{parent()}}{% endblock %}
+
+{% block stylesheets %}
+<!-- vendor css Table -->
+<link rel="stylesheet" href="{{ asset('assets/css/azia.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+
+{% include 'partials/header.html.twig' %}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <div>
+                <input type="submit" class="btn btn-primary" value="plus d'infos" id="submitBtn">
+            </div>
+        </div>
+        <div class="col-8">
+
+
+            <input id="get" type="button">
+
+            <select id="list">  
+                <option value="">-----</option>  
+            </select>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+{# Main #}
+{# <script src="{{ asset('assets/js/azia.js') }}"></script>
+<script src="{{ asset('assets/js/testAjax.js') }}"></script> #}
+{% endblock %}

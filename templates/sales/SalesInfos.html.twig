@@ -1,0 +1,273 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Main-dashboard - {{parent()}}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('assets/css/azia.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+
+{% include 'partials/header.html.twig' %}
+
+
+<!-- BASIC MODAL : DELETE -->
+<div id="modaldemo2" class="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-content-demo">
+      <div class="modal-header">
+        <h6 class="modal-title">suppression de contrat</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Le contrat a été effacé</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-indigo" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# ******************************************************************************** #}
+
+<div class="az-content az-content-app az-content-contacts pd-b-0">
+  <div class="container">
+    <div class="az-content-left az-content-left-contacts">
+
+      <h2 class="az-content-title tx-24 mg-b-30">Détails clients</h2>
+
+      <nav class="nav az-nav-line az-nav-line-chat">
+        <a href="" data-toggle="tab" class="nav-link active">Tous mes clients</a>
+        {# <a href="" data-toggle="tab" class="nav-link">Groups</a> #}
+      </nav>
+
+      <!-- *************************LEFT******************************************************************************* -->
+
+      <div id="azContactList" class="az-contacts-list">
+
+        {% for letter in 'A'..'Z' %}
+
+        <div class="az-contact-label">{{ letter }}</div>
+
+        {% for sale in sales %}
+
+        {% if sale.customers.lastName|first == letter %}
+
+        <div class="az-contact-item">
+
+          <div class="az-avatar bg-gray-700 online">{{ letter }}</div>
+          <div class="az-contact-body">
+            <h6>{{sale.customers.lastName}}</h6>
+            <span class="phone">{{sale.customers.firstName}}</span>
+          </div><!-- az-contact-body -->
+          <a href="" class="az-contact-star active"><i class="typcn typcn-star"></i></a>
+
+          {# input hidden for set the rigth page pour envoi requete AJAX #}
+          <input id="set-infoId" type="hidden" value=" {{sale.customers.id}} ">
+
+        </div><!-- az-contact-item -->
+
+        {% endif %}
+
+        {% endfor %}
+
+        {% endfor %}
+
+        {# path to AJAX URL - CUSTOMER INFOS #}
+        <div id="ajax_path1" data-path="{{ path('ajax')}}"></div>
+
+        {# path to AJAX URL - CONTRACTS INFOS #}
+        <div id="ajax_path2" data-path="{{ path('ajaxSales')}}"></div>
+
+      </div><!-- az-contacts-list -->
+    </div><!-- az-content-left -->
+
+
+
+    <!-- *************************RIGHT******************************************************************************* -->
+
+    <div class="az-content-body az-content-body-contacts" id="infoCustomerContainer">
+
+      <div class="az-contact-info-header" id="infoCustomer">
+        <div class="media">
+          <div class="az-img-user">
+            <img src="https://via.placeholder.com/500x500" alt="">
+            <a href=""><i class="typcn typcn-camera-outline"></i></a>
+          </div>
+          <div class="media-body">
+            <h4 id="get-infoLastName"></h4>
+            <p>Numéro de client : <span id="get-infoId"></span></p>
+            <nav class="nav">
+              <a id="linkGoogleMap" class="nav-link"><i class="icon ion-md-globe"></i> Google Map </a>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+
+      {# ENREGISTREMENT DES INFOS CUSTOMER BY FIRST AJAX
+      #}
+      <input id="set-infoLastName" type="hidden">
+      <input id="set-infoFirstName" type="hidden">
+      <input id="set-infoEmail" type="hidden">
+      <input id="set-infoAddress" type="hidden">
+
+      {# PARTS INFOS
+      CUSTOMERS*******************************************************************************************************
+      #}
+      <div class="az-contact-info-body">
+
+
+        <div id="subInfosCustomer" class="az-invoice-list">
+
+          <div id="linkCustomer">
+            <div class="media infos_customer">
+              <div class="media-icon"> <i class="far fa-building"></i></div>
+              <div class="media-body">
+                <h6><span> Infos clients</span></h6>
+              </div>
+            </div>
+          </div>
+
+          <div id="linkContract">
+            <div class="media _infos_contract ">
+              <div class="media-icon"> <i class="far fa-handshake"></i></div>
+              <div class="media-body">
+                <h6><span class="logoCustomerMenu"> Infos contrat</span></h6>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {# FORM
+        CUSTOMERS*******************************************************************************************************
+        #}
+
+        <div id="formInfosCustomer" class="az-contacts-list">
+
+          <form id="FormEditCustomer" method="post">
+
+            <div class="row row-sm">
+
+              <div class="col-lg-4">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="typcn typcn-home-outline tx-24 lh--9 op-6"></i>
+                    </span>
+                  </div>
+                  {# <input type="text" id="new_customer_firstName" class="form-control" placeholder="Prénom du client"
+                    name="new_customer[firstName]"> #}
+                  <input name="formCustomerFirstName" type="text" id="formCustomerFirstName" class="form-control"
+                    placeholder="Prénom du client">
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="typcn typcn-home-outline tx-24 lh--9 op-6"></i>
+                    </span>
+                  </div>
+                  <input type="text" id="formCustomerLastName" class="form-control" placeholder="Nom du client">
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="typcn typcn-home-outline tx-24 lh--9 op-6"></i>
+                    </span>
+                  </div>
+                  <input type="text" id="formCustomerEmail" class="form-control" placeholder="Email">
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="typcn typcn-home-outline tx-24 lh--9 op-6"></i>
+                    </span>
+                  </div>
+                  <input type="text" id="formCustomerAdress" class="form-control" placeholder="Adresse">
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="typcn typcn-home-outline tx-24 lh--9 op-6"></i>
+                    </span>
+                  </div>
+                  <input type="text" id="formCustomerZipCode" class="form-control" placeholder="Code Postale">
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="typcn typcn-home-outline tx-24 lh--9 op-6"></i>
+                    </span>
+                  </div>
+                  <input type="text" id="formCustomerCity" class="form-control" placeholder="Ville">
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="input-group mb-3">
+                  <button type="submit" id="customerCity" class="btn btn-outline-indigo btn-sm">
+                    <i class="typcn typcn-database tx-24 lh--9 op-6"></i>
+                    Modifier </button>
+                </div>
+              </div>
+
+          </form>
+
+        </div>
+      </div>
+
+      {# PARTS
+      CONTRACTS******************************************************************************************************
+      #}
+
+      <div id="azContractsList" class="az-contacts-list">
+
+        {# <div id="contract_item" class="az-contact-item">
+          <div class="az-contact-body">
+            <h6>TOtO</h6>
+            <span class="phone">TOTO</span>
+          </div><!-- az-contact-body -->
+          <a href="" class="az-contact-star active"><i class="typcn typcn-star"></i></a>
+        </div><!-- az-contact-item --> #}
+
+      </div>
+
+    </div>
+  </div><!-- az-contact-info-body -->
+
+</div><!-- az-content-body -->
+</div><!-- az-content -->
+
+{% include 'partials/footer.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="{{ asset('assets/lib/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/js/contactsAJAX.js') }}"></script>
+<script src="{{ asset('assets/js/editContract.js') }}"></script>
+
+<script src="{{ asset('assets/js/azia.js') }}"></script>
+
+{% endblock %}

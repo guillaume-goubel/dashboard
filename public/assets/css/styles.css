@@ -1,0 +1,72 @@
+.az-column-signup{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcomeUser{
+    color:blue;
+}
+
+.az-content-dashboard-eight {
+    padding: 0;
+    padding-top: 1rem;
+}
+
+#grapHide{
+    display: none;
+}
+
+#test{
+    width: 100%;
+    height: 50%;
+}
+
+.chartjs-render-monitor{
+    height: 75px;
+}
+
+#menuTitle{
+    color:blue;
+    margin-bottom: 0.3rem;
+}
+
+#Contractform{
+    margin-left: 15rem;
+}
+
+/* SalesEdit */
+#EditContractForm{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+#linkEdit{
+    margin-right: 10px;
+}
+
+/* INFOS CUSTOMER */
+#infoCustomer{
+    display: none;
+}
+
+#subInfosCustomer{
+    display: none;
+}
+
+#formInfosCustomer{
+    margin-top: 3rem;
+    display: none;
+}
+
+.logoCustomerMenu{
+margin-left: 1rem;
+}
+
+
+#azContractsList{
+    display: none;
+}
+

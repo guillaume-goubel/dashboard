@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Main-dashboard - {{parent()}}{% endblock %}
+
+{% block stylesheets %}
+<!-- vendor css Table -->
+<link rel="stylesheet" href="{{ asset('assets/css/azia.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+
+{% include 'partials/header.html.twig' %}
+
+<div class="az-content az-content-app pd-b-0">
+  <div class="container">
+
+    <!-- **************************LEFT******************************************************************************- -->
+    <div class="az-content-left az-content-left-invoice">
+      <h2 class="az-content-title tx-24 mg-b-25">Nouveau client</h2>
+
+      <div id="azInvoiceList" class="az-invoice-list">
+
+        {% for info in infosCustomer %}
+
+        <div class="media selected">
+          <div class="media-icon"><i class="far fa-file-alt"></i></div>
+          <div class="media-body">
+            <h6>
+              <span>N° nouveau client: {{info.id}}</span>
+              <span>Nom: {{info.lastName}} </span>
+            </h6>
+            <div>
+              {# <p><span>Date: {{info.lastName}} </span></p> #}
+            </div>
+          </div><!-- media-body -->
+        </div><!-- media -->
+
+        {% endfor %}
+
+      </div><!-- az-invoice-list -->
+    </div><!-- az-content-left -->
+
+    <!-- **************************MAIN***************************************************- -->
+    <!-- **************************MAIN 1 , résumé New client*****************************- -->
+    <div class="az-content-body az-content-body-invoice">
+      <div class="card card-invoice">
+        <div class="card-body">
+
+          <div class="invoice-header">
+            <h1 class="invoice-title">Nouveau Contrat</h1>
+          </div><!-- invoice-header -->
+
+          <!-- Infos nouveau client -->
+          <div class="col-md">
+            {% for info in infosCustomer %}
+            <label class="tx-gray-600">Information client</label>
+            <p class="invoice-info-row">
+              <span>Numéro client</span>
+              <span>{{info.id}}</span>
+            </p>
+            <p class="invoice-info-row">
+              <span>Nom</span>
+              <span>{{info.lastName}}</span>
+            </p>
+            <p class="invoice-info-row">
+              <span>Prénom</span>
+              <span>{{info.firstName}}</span>
+            </p>
+            <p class="invoice-info-row">
+              <span>Adresse</span>
+              <span>{{info.address}} / {{info.zipcode}} / {{info.city}} </span>
+            </p>
+            <p class="invoice-info-row">
+              <span>Email</span>
+              <span>{{info.email}}</span>
+            </p>
+            {% endfor %}
+          </div>
+
+          <hr class="mg-b-10">
+
+          <!-- Formulaire -->
+          <div class="az-content-body">
+          <div class="container">
+              <div class="az-content-breadcrumb">
+                <div class="row row-sm" id="Contractform">
+                  <div class="d-flex flex-column wd-md-400 pd-30 pd-sm-40 bg-gray-200">
+
+                    {{ form_start(formContratType, {'attr': {'novalidate': 'novalidate'}}) }}
+                    <div class="form-group">
+                     <label class="form-control-label">Zone de vente: </label>
+                      {{ form_widget(formContratType.saleZone, { 'attr': {'class': 'form-control'}  }) }}
+                      {{ form_errors(formContratType.saleZone) }}
+                    </div><!-- form-group -->
+
+
+                    <div class="form-group">
+                    <label class="form-control-label">Date de création du contrat: </label>
+                      {{ form_widget(formContratType.createdAt, { 'attr': {'class': 'form-control'}  }) }}
+                      {{ form_errors(formContratType.createdAt) }}
+                    </div><!-- form-group -->
+
+
+                    <div class="form-group">
+                    <label class="form-control-label">Type de contrat: </label>
+                      {{ form_widget(formContratType.saleTypes, { 'attr': {'class': 'form-control'}  }) }}
+                      {{ form_errors(formContratType.saleTypes) }}
+                    </div><!-- form-group -->
+
+
+                    <div class="form-group">
+                    <label class="form-control-label">Client: </label>
+                      {{ form_widget(formContratType.customers, { 'attr': {'class': 'form-control', 'placeholder': 'client'}  }) }}
+                      {{ form_errors(formContratType.customers) }}
+                    </div><!-- form-group -->
+
+
+                    <div class="form-group">
+                    <label class="form-control-label">Vendeur: </label>
+                      {{ form_widget(formContratType.seller, { 'attr': {'class': 'form-control', 'placeholder': 'vendeur'}  }) }}
+                      {{ form_errors(formContratType.seller) }}
+                    </div><!-- form-group -->
+
+
+<div class="form-group">
+                      <input type="submit" class="btn btn-az-primary pd-x-145" value="Créer le contrat" />
+</div>
+                    {{ form_end(formContratType) }}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% include 'partials/footer.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="{{ asset('assets/js/azia.js') }}"></script>
+<script src="{{ asset('assets/lib/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/js/viewContratc.js') }}"></script>
+
+{% endblock %}

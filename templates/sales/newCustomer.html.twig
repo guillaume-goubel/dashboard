@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Main-dashboard - {{parent()}}{% endblock %}
+
+{% block stylesheets %}
+<!-- vendor css Table -->
+<link rel="stylesheet" href="{{ asset('assets/css/azia.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+
+{% include 'partials/header.html.twig' %}
+
+{{ form_start(formType, {'attr': {'novalidate': 'novalidate'}}) }}
+
+
+<div class="container">
+    <div id="wizard2">
+
+        <h3>Civilité</h3>
+        <section>
+            <p class="mg-b-20">Valider les étapes et appuyer sur suivant</p>
+
+            <div class="row row-sm">
+            
+                <div class="col-md-5 col-lg-4">
+                    <label class="form-control-label">Prénom: <span class="tx-danger">*</span></label>
+                    {{ form_widget(formType.firstName, { 'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(formType.firstName) }}
+                </div><!-- col -->
+
+                <div class="col-md-5 col-lg-4">
+                    <label class="form-control-label">Nom: <span class="tx-danger">*</span></label>
+                    {{ form_widget(formType.lastName, { 'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(formType.lastName) }}
+                    </label><!-- col -->
+                </div><!-- col -->
+            </div>
+
+        </section>
+
+        <h3>Adresse</h3>
+        <section>
+            <div class="row row-sm">
+                <div class="col-md-5 col-lg-4">
+                    <label class="form-control-label">Adresse: <span class="tx-danger">*</span></label>
+                    {{ form_widget(formType.address, { 'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(formType.address) }}
+                </div><!-- col -->
+
+                <div class="col-md-5 col-lg-4">
+                    <label class="form-control-label">Code Postal: <span class="tx-danger">*</span></label>
+                    {{ form_widget(formType.zipCode, { 'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(formType.zipCode) }}
+                </div><!-- col -->
+
+                <div class="col-md-5 col-lg-4">
+                    <label class="form-control-label">Ville: <span class="tx-danger">*</span></label>
+                    {{ form_widget(formType.city, { 'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(formType.city) }}
+                </div><!-- col -->
+            </div><!-- row -->
+
+        </section>
+
+        <h3>Mail</h3>
+        <section>
+            <div class="row row-sm">
+                <div class="col-md-5 col-lg-4">
+                    <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                    {{ form_widget(formType.email, { 'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(formType.email) }}
+                </div><!-- col -->
+
+                <div class="col-md-12 col-lg-12">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Créer le nouveau client" />
+                </div><!-- col -->
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+{{ form_end(formType) }}
+
+{% include 'partials/footer.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('assets/lib/jquery-steps/jquery.steps.min.js') }}"></script>
+<script src="{{ asset('assets/lib/parsleyjs/parsley.min.js') }}"></script>
+<script src="{{ asset('assets/js/azia.js') }}"></script>
+<script src="{{ asset('assets/js/wizard.js') }}"></script>
+{% endblock %}

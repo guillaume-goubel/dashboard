@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Twitter -->
+    <meta name="twitter:site" content="@themepixels">
+    <meta name="twitter:creator" content="@themepixels">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Azia">
+    <meta name="twitter:description" content="Responsive Bootstrap 4 Dashboard Template">
+    <meta name="twitter:image" content="http://themepixels.me/azia/img/azia-social.png">
+
+    <!-- Facebook -->
+    <meta property="og:url" content="http://themepixels.me/azia">
+    <meta property="og:title" content="Azia">
+    <meta property="og:description" content="Responsive Bootstrap 4 Dashboard Template">
+
+    <meta property="og:image" content="http://themepixels.me/azia/img/azia-social.png">
+    <meta property="og:image:secure_url" content="http://themepixels.me/azia/img/azia-social.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="600">
+
+    <!-- Meta -->
+    <meta name="description" content="Responsive Bootstrap 4 Dashboard Template">
+    <meta name="author" content="ThemePixels">
+
+    <title>{% block title %}Projekt{% endblock %}</title>
+
+    <!-- vendor css ALL -->
+    <link rel="stylesheet" href="{{ asset('assets/lib/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/lib/ionicons/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/lib/typicons.font/typicons.css') }}">
+    {% block stylesheets %}{% endblock %}
+
+</head>
+
+<body class="az-body az-dashboard-eight">
+
+    {% block body %}{% endblock %}
+
+    <script src="{{ asset('assets/lib/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/ionicons/ionicons.js') }}"></script>
+
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+
+    {% block javascripts %}{% endblock %}
+
+</body>
+
+</html>
+

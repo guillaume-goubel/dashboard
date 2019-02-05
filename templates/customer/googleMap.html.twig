@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Main-dashboard - {{parent()}}{% endblock %}
+
+{% block stylesheets %}
+<!-- vendor css Table -->
+<link rel="stylesheet" href="{{ asset('assets/lib/datatables.net-dt/css/jquery.dataTables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/lib/select2/css/select2.min.css') }}">
+
+<link rel="stylesheet" href="{{ asset('assets/css/azia.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+
+{% endblock %}
+
+{% block body %}
+
+{# ***********************Adresse pour récupérer lat et long pour la map****************************** #}
+
+{# 'adresse au bon format pour l'envoyer dans url via la requete AJAX pour obtenir les latitudes et longitudes #}
+<input id="streetForMap" type="hidden" value="{{ customerAddressWithPlus }}"> 
+<input id="zipCodeForMap" type="hidden" value="{{ customer.zipCode }}"> 
+<input id="cityForMap" type="hidden" value="{{ customer.city }}"> 
+
+{# ************************************************************************** #}
+
+<div class="az-content">
+  <div class="container">
+    <div class="az-content-body">
+      <div class="row">
+
+        <div class="col-lg-6 mg-t-50 mg-lg-t-0">
+          <div class="az-content-label mg-b-5">Using Marker</div>
+          <p class="mg-b-20">A map style with marker.</p>
+          <div id="map2" class="ht-500"></div>
+        </div><!-- col-->
+
+      </div><!-- row -->
+    </div><!-- az-content-body -->
+  </div>
+</div><!-- az-content -->
+
+
+{% include 'partials/footer.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{# Map #}
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyAq8o5-8Y5pudbJMJtDFzb8aHiWJufa5fg"></script>
+<script src="{{ asset('assets/lib/gmaps/gmaps.min.js') }}"></script>
+
+{# Main #}
+<script src="{{ asset('assets/js/azia.js') }}"></script>
+
+{# Map #}
+<script src="{{ asset('assets/js/map.shiftworker.js') }}"></script>
+<script src="{{ asset('assets/js/map.bluewater.js') }}"></script>
+<script src="{{ asset('assets/js/map.apple.js') }}"></script>
+<script src="{{ asset('assets/js/map.mapbox.js') }}"></script>
+
+<script src="{{ asset('assets/js/coordonate.js') }}"></script>
+
+{% endblock %}

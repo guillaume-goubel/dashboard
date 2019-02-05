@@ -1,0 +1,11 @@
+
+{% for message in app.flashes('danger') %}
+        <div id="alert" class="flash-danger alert alert-danger">
+            <h2 class="alert-heading">Attention !</h2>
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+{% endfor %}
+
